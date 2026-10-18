@@ -1,0 +1,30 @@
++--------------------------------------------------------------+
+|                     OHCS CERTIFICATION DASHBOARD             |
++--------------------------------------------------------------+
+
+Vendor: _____________________________
+Submission ID: ______________________
+Date: _______________________________
+
+---------------------------------------------------------------
+| KPI                         | Value        | Threshold | Pass |
+---------------------------------------------------------------
+| Aliasing RMS Error          | 0.034 V      | ≤ 0.165 V | ✔    |
+| Bit Error RMS               | 0.008 V      | ≤ 0.033 V | ✔    |
+| Leakage Probability         | 0.00042      | ≤ 0.001   | ✔    |
+| Leakage CI95 Upper Bound    | 0.0021       | ≤ 0.005   | ✔    |
+---------------------------------------------------------------
+
+Overall Certification Result:  ✔ PASS
+
+Artifacts:
+[Download KPI Report]   [Download Logs]   [View CI/CD Run]
+
+Badges Earned:
+[PASS Badge]   [OHCS Certified v1.0]   [Mixed-Signal Verified]
+
+---------------------------------------------------------------
+Notes:
+- All KPIs meet OHCS v1.0 thresholds.
+- Vendor implementation is fully conformant.
+---------------------------------------------------------------
