@@ -1,4 +1,3 @@
-# open-hardware-fsc-standard
 open-hardware-fsc-standard/
 │
 ├── docs/
@@ -38,7 +37,6 @@ open-hardware-fsc-standard/
 │
 ├── LICENSE
 └── README.md
-
 # Open Hardware Conformance Standard (OHCS)
 ### Mixed‑Signal Finite State Controller (MS‑FSC)
 Version 1.0 — October 2026  
