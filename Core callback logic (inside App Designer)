@@ -1,0 +1,52 @@
+methods (Access = private)
+
+    function LoadLogsButtonPushed(app, event)
+        [file, path] = uigetfile('*.mat', 'Select logs.mat');
+        if isequal(file,0)
+            return;
+        end
+        app.Logs = load(fullfile(path, file));
+        app.StatusTextArea.Value = {'Logs loaded successfully.'};
+    end
+
+    function RunKPIButtonPushed(app, event)
+        if isempty(app.Logs)
+            app.StatusTextArea.Value = {'Please load logs first.'};
+            return;
+        end
+
+        spec = kpi_spec;           % from your MATLAB file
+        report = generate_kpi_report(app.Logs.logs, spec);
+
+        % Update table
+        app.KPITable.Data = {
+            'Aliasing RMS Error', report.alias_rms, spec.alias_rms_max, logical(report.alias_pass);
+            'Bit Error RMS',      report.bit_err_rms, spec.bit_rms_max, logical(report.bit_pass);
+            'Leakage Probability',report.leak_prob, spec.leak_prob_max, logical(report.leak_pass);
+            'Leakage CI95 Upper', report.leak_CI95(2), spec.leak_ci95_max, logical(report.leak_pass)
+        };
+
+        % Update lamp / badge
+        if report.overall_pass
+            app.OverallLamp.Color = [0 0.7 0]; % green
+            app.OverallLabel.Text = 'OVERALL: PASS';
+        else
+            app.OverallLamp.Color = [0.8 0 0]; % red
+            app.OverallLabel.Text = 'OVERALL: FAIL';
+        end
+
+        % Optional plot
+        if isfield(app.Logs.logs, 'Vout_analog') && isfield(app.Logs.logs, 'adc_data')
+            t = app.Logs.logs.time;
+            Vout = app.Logs.logs.Vout_analog;
+            Vadc = double(app.Logs.logs.adc_data) * (spec.Vref / spec.ADC_levels);
+            plot(app.UIAxes, t, Vout - Vadc);
+            title(app.UIAxes, 'Aliasing Error vs Time');
+            xlabel(app.UIAxes, 'Time (s)');
+            ylabel(app.UIAxes, 'Error (V)');
+        end
+
+        app.StatusTextArea.Value = {'KPI report completed.'};
+    end
+
+end
